@@ -7,23 +7,23 @@ names = model.model.names
 
 # print(names)
 
-cam = cv2.VideoCapture("vidp.mp4")
+cam = cv2.VideoCapture("vid2.mp4")
 
-centerPoint = (600, 480)
+centerPoint = (10, 10)
 
 while True:
     success, frame = cam.read()
     if not success:
         break
     
-    frame = cv2.resize(frame, (800, 500))
+    frame = cv2.resize(frame, (1300, 700))
     results = model.predict(frame)
     boxes = results[0].boxes.xyxy.cpu()
     clss = results[0].boxes.cls.cpu().tolist()
 
     # print(boxes)
     # print(clss)
-    annotator = Annotator(frame, line_width=1)
+    annotator = Annotator(frame)
 
     for box, cls in zip(boxes, clss):
         annotator.box_label(box, label=names[int(cls)], color=colors(int(cls)))
